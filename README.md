@@ -1,4 +1,4 @@
-# Installation Instructions for COASTED on ARCHER
+# Installation Instructions for CoastED on ARCHER
 
 ## Software Requirements
 - CoastED (github link [here](https://github.com/CoastED/coasted))
@@ -12,7 +12,7 @@
 ## 1. Setting up the Environment
 Choose a directory to act as the root directory for your install. In this directory create a `modules/` directory to contain your module file, `coasted-gcc`. Also create `contrib/` and `contrib/gcc/` directories to contain the compiled third party libraries.
 
-Download the dependencies into the root directory
+Download the dependencies into the rCOASTEDoot directory
 
 Copy the `coasted-gcc` file into the `modules` directory and edit it so that the lines defining `COASTED_HOME`, `workDir` and `contribDir` point to the directories `coasted/`, `contrib/` and `contrib/gcc/` respectively.
 
