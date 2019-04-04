@@ -1,0 +1,112 @@
+#%Module2.0
+#
+# CoastED environment module for ARCHER
+#
+# - Angus Creech (a.creech@ed.ac.uk)
+#   Institute for Energy Systems
+#   University of Edinburgh
+#
+#############################################################################
+
+conflict PrgEnv-cray
+conflict PrgEnv-intel
+
+#############################################################################
+# Modules to load
+
+
+module load PrgEnv-gnu
+module load cray-libsci
+
+module unload cray-tpsl
+module load cray-netcdf
+module load cray-hdf5
+#module load cray-petsc/3.6.1.0
+
+module load cmake
+module load boost
+module load vtk
+module load zoltan
+
+module load python-compute
+module load pc-numpy
+module load pc-scipy
+
+global env
+
+# ----------------------------------------------------------------------------
+
+# Editable parameters
+setenv COASTED_HOME /work/d67/d67/gordong/coasted/coasted
+set workDir "/work/d67/d67/gordong/contrib"
+set contribDir "/work/d67/d67/gordong/contrib/gcc"
+
+# ----------------------------------------------------------------------------
+
+setenv ARCHER "yes"
+
+# Compiles dynamic loaded libraries.
+setenv CRAYPE_LINK_TYPE "dynamic"
+setenv CRAY_ADD_RPATH "yes"
+
+setenv CPPFLAGS "-DMPICH_IGNORE_CXX_SEEK"
+
+setenv CC "cc"
+setenv MPICC "cc"
+
+setenv CXX "CC"
+setenv MPICXX "CC"
+
+setenv FC "ftn"
+setenv MPIFC "ftn"
+
+setenv F77 "ftn"
+setenv MPIF77 "ftn"
+
+setenv F90 "ftn"
+setenv MPIF90 "ftn"
+
+# CFLAGS, etc.
+
+set optFlags "-O2 -march=native -funroll-loops -ffast-math"
+
+
+setenv CFLAGS $optFlags
+setenv CXXFLAGS $optFlags
+setenv FFLAGS $optFlags
+setenv FCFLAGS $optFlags
+setenv F90FLAGS $optFlags
+
+
+
+setenv CONTRIB_DIR $contribDir
+set contribInc "-I$contribDir/include"
+set contribLibFlags "-L$contribDir/lib"
+
+# Use local copy of PETSC 3.6.4
+
+setenv PETSC_DIR $contribDir/petsc
+set petscInc "-I$env(PETSC_DIR)/include"
+set petscLibFlags "-L$env(PETSC_DIR)/lib"
+
+setenv ZOLTAN_INCLUDE_OPTS "-I$contribDir/include"
+setenv ZOLTAN_POST_LINK_OPTS "-L$contribDir/lib"
+
+setenv CPPFLAGS "$env(VTK_INCLUDE_OPTS) $env(ZOLTAN_INCLUDE_OPTS) $contribInc $petscInc"
+setenv LIBS "$env(VTK_POST_LINK_OPTS) $env(ZOLTAN_POST_LINK_OPTS) $contribLibFlags $petscLibFlags"
+
+
+# Python paths
+
+append-path PYTHONPATH $env(COASTED_HOME)/python
+#Seems to break linking on ARCHER
+#setenv PYTHONHOME /work/y07/y07/cse/python/2.7.6/
+
+#
+
+append-path PATH $env(COASTED_HOME)/bin
+append-path PATH $env(COASTED_HOME)/python
+append-path PATH $contribDir/bin
+
+append-path LD_LIBRARY_PATH $env(PETSC_DIR)/lib
+append-path LD_LIBRARY_PATH $contribDir/lib
