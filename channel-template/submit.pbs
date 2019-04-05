@@ -1,0 +1,16 @@
+#!/bin/bash --login
+
+#PBS -N preprocess
+#PBS -l select=1
+#PBS -l walltime=00:10:00
+#PBS -A z19-cse
+
+export PBS_O_WORKDIR=$(readlink -f $PBS_O_WORKDIR)               
+
+cd $PBS_O_WORKDIR
+
+export OMP_NUM_THREADS=1
+
+./flrun.sh 24 3.6
+
+
