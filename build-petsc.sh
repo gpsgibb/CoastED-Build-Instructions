@@ -40,11 +40,8 @@ EXTRA_LIBS="-L$PETSC_DIR/$PETSC_ARCH/lib"
 --CXXFLAGS="-O2 $CXXFLAGS -I$MPICH_DIR/include -I$HOME/include" \
 --FCFLAGS="-O2 $FCFLAGS -I$MPICH_DIR/include -I$HOME/include " \
 --LIBS="-O2 $EXTRA_LIBS -L$MPICH_DIR/lib -L$HOME/local/lib" \
-F90FLAGS=$F90FLAGS F77=$F77 F90=$F90 FFLAGS=$FFLAGS CPPFLAGS=$CPPFLAGS \
---with-ptscotch=1 --download-ptscotch=1 \
---with-metis --with-metis-dir=$METIS_DIR \
---with-parmetis=1 --download-parmetis=1 \
+F90FLAGS=$F90FLAGS F77=$F77 F90=$F90 FFLAGS=$FFLAGS CPPFLAGS=$CPPFLAGS
 
 
 make PETSC_DIR=`pwd`  MAKE_NP=8 all
-make PETSC_DIR="$TARGET_PETSC_DIR" PETSC_ARCH=sandybridge install
+make PETSC_DIR=`pwd` PETSC_ARCH=sandybridge install
